@@ -1,4 +1,3 @@
-import React from "react";
 export const metadata = {
     title: "زيت الرموش الطبيعي من بيوداليا",
 };
