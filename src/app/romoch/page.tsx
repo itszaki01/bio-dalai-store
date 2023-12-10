@@ -11,8 +11,6 @@ import ImgFive from "../../assets/images/romoch/5.png";
 import OrderNowFrom from "@/components/OrderNowFrom/OrderNowFrom";
 import OrderNowBtn from "@/components/OrderNowBtn";
 import { useDevicesContext } from "@/contexts/DevicesContext";
-import ReactPixel from "react-facebook-pixel";
-import Head from "next/head";
 
 export default function Romoch() {
     const { isTabletAndMobile } = useDevicesContext();
@@ -42,9 +40,7 @@ export default function Romoch() {
     useEffect(()=>{
         const doc = document.getElementById("pixel-fb")
         if(!doc) return
-        doc.outerHTML = `
-        <!-- Meta Pixel Code -->
-        <script>
+        doc.innerHTML = `
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -55,11 +51,6 @@ export default function Romoch() {
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '665240662159794');
         fbq('track', 'PageView');
-        </script>
-        <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=665240662159794&ev=PageView&noscript=1"
-        /></noscript>
-        <!-- End Meta Pixel Code -->
         `;
     },[])
     return (
