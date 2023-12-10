@@ -22,7 +22,8 @@ const formSchema = yup.object().shape({
     adress: yup.string().required('الرجاء كتابة العنوان').min(3,'يجب أن يكون العنوان من 3 حروف على الأقل'),
     phone: yup.string().required('الرجاء كتابة رقم الهاتف').min(10,'رقم الهاتف خاطئ').max(10,'رقم الهاتف خاطئ'),
     wilaya: yup.string().matches(/^(?!.*الولاية).*/,'الرجاء إختيار الولاية'),
-    shipcost: yup.number().required()
+    shipcost: yup.number().required(),
+    price: yup.number().required(),
 })
 export default function OrderNowFrom({ color, targetRef }: Props) {
     const [offer, setOffer] = useState<number>(2);

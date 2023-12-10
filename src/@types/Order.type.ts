@@ -8,7 +8,7 @@ export type TOrderREQ = {
     realship?: number;
     quantity?: number;
     netprice?: number;
-    price?: number;
+    price: number;
     shipcost: number;
     shortname?: string;
     total?: number;
