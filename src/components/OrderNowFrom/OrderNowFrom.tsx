@@ -11,6 +11,7 @@ import { TOrderREQ } from "@/@types/Order.type";
 import moment from "moment";
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
 type Props = {
     color: string;
     targetRef: React.RefObject<HTMLFormElement>;
@@ -29,6 +30,7 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
     const [offer, setOffer] = useState<number>(2);
     const { isTabletAndMobile } = useDevicesContext();
     const [CreateNewOrder, { isLoading }] = useCreateNewOrderMutation();
+    const router = useRouter()
     const { handleSubmit, register, setValue, watch,formState:{errors} } = useForm<TOrderREQ>({
         defaultValues: {
             price: 3900,
@@ -76,14 +78,20 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
         setValue("wilaya", `${e.target.value.split("|")[0]}`);
     };
 
-    const onSubmit = (data: TOrderREQ) => {
+    const onSubmit = async (data: TOrderREQ) => {
         const newData = {
             ...data,
             total: watch("price") + watch("shipcost"),
             date: moment().format("L LTS"),
             timecode: "🕑",
         };
-        CreateNewOrder(newData);
+
+        try {
+            await CreateNewOrder(newData).unwrap();
+            router.push('/thankyou')
+        }catch (error) {
+            console.log(error)
+        }
     };
     return (
         <form dir="rtl" className="order-form" id="order-form" ref={targetRef} onSubmit={handleSubmit(onSubmit)}>
