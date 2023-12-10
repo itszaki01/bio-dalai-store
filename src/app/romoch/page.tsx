@@ -41,11 +41,11 @@ export default function Romoch() {
             }
         };
     }, 1000);
-    useEffect(()=>{
-        const PIXEL_ID = '11111111111111'
-        ReactPixel.init(PIXEL_ID);
-        ReactPixel.pageView()
-     },[])
+    // useEffect(()=>{
+    //     const PIXEL_ID = '11111111111111'
+    //     ReactPixel.init(PIXEL_ID);
+    //     ReactPixel.pageView()
+    //  },[])
     return (
         <Container size={isTabletAndMobile ? "xl" : "md"} p={0} pb={60}>
             <Head>
