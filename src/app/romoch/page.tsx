@@ -41,7 +41,7 @@ export default function Romoch() {
         };
     }, 1000);
     useEffect(()=>{
-        const PIXEL_ID = '356136510430490'
+        const PIXEL_ID = '11111111111111'
         ReactPixel.init(PIXEL_ID);
         ReactPixel.pageView()
      },[])
