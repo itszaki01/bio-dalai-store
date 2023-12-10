@@ -5,7 +5,7 @@ import { MantineProvider, createTheme } from "@mantine/core";
 import { ColorSchemeScript } from "@mantine/core";
 import DevicesContextProvider from "../contexts/DevicesContext";
 import ReduxProvider from "@/redux/Provider";
-
+import Logo from '../assets/log1.png'
 const theme = createTheme({
     /** Put your mantine theme override here */
 });
@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 <ColorSchemeScript />
                 <script id='pixel-fb'></script>
+                <link rel="icon" type="image/svg+xml" href={'./logo.png'} />
             </head>
             <body>
                 <MantineProvider theme={theme}>
