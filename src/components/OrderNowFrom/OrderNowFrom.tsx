@@ -1,39 +1,62 @@
-'use client'
+"use client";
 import { Badge, Blockquote, Button, CheckIcon, Divider, Fieldset, Flex, NativeSelect, Radio, Stack, TextInput, Title } from "@mantine/core";
 import React, { CSSProperties, useMemo, useState } from "react";
 import "./OrderNowFrom.scss";
-import { useSetState } from "@mantine/hooks";
-import { useDevicesContext } from "@/contexts/DevicesContext"; 
+import { useDevicesContext } from "@/contexts/DevicesContext";
 import { wilayaList } from "../../data/wliayaList";
 import { IconTruckDelivery } from "@tabler/icons-react";
+import { useCreateNewOrderMutation } from "@/redux/services/ordersApiService/ordersApiService";
+import { useForm } from "react-hook-form";
+import { TOrderREQ } from "@/@types/Order.type";
+import moment from "moment";
+import * as yup from 'yup'
+import { yupResolver } from "@hookform/resolvers/yup";
 type Props = {
     color: string;
     targetRef: React.RefObject<HTMLFormElement>;
     // containerRef: React.RefObject<HTMLFieldSetElement>;
 };
 
+const formSchema = yup.object().shape({
+    name: yup.string().required('الرجاء كتابة الإسم').min(3,'يجب أن يكون الإسم من 3 حروف على الأقل'),
+    adress: yup.string().required('الرجاء كتابة العنوان').min(3,'يجب أن يكون العنوان من 3 حروف على الأقل'),
+    phone: yup.string().required('الرجاء كتابة رقم الهاتف').min(10,'رقم الهاتف خاطئ').max(10,'رقم الهاتف خاطئ'),
+    wilaya: yup.string().matches(/^(?!.*الولاية).*/,'الرجاء إختيار الولاية'),
+    shipcost: yup.number().required()
+})
 export default function OrderNowFrom({ color, targetRef }: Props) {
     const [offer, setOffer] = useState<number>(2);
-    const [prices, setPrices] = useSetState({ price: 3900, shipping: 0 });
     const { isTabletAndMobile } = useDevicesContext();
-    const [orderData, setOrderData] = useState({
-        realship: 0,
-        date: Date.now(),
-        orderstatus: "WAITING         (🔘)",
-        timecode: "🕑",
-        quantity: 2,
-        netprice: 1300,
+    const [CreateNewOrder, { isLoading }] = useCreateNewOrderMutation();
+    const { handleSubmit, register, setValue, watch,formState:{errors} } = useForm<TOrderREQ>({
+        defaultValues: {
+            price: 3900,
+            shipcost: 0,
+            realship: 0,
+            quantity: 2,
+            netprice: 1300,
+            wilaya: "الولاية",
+            shortname: "زيت الرموش (2)",
+        },
+        resolver: yupResolver(formSchema)
     });
+
     const handleOfferOneClick = () => {
         setOffer(1);
-        setOrderData({...orderData,quantity:1})
-        setPrices({ price: 2300, shipping: 600 });
+        setValue("quantity", 1);
+        setValue("price", 2300);
+        setValue("shipcost", 600);
+        setValue("netprice", 650);
+        setValue("shortname", `زيت الرموش (1)`);
     };
-    
+
     const handleOfferTwoClick = () => {
         setOffer(2);
-        setOrderData({...orderData,quantity:2})
-        setPrices({ price: 3900, shipping: 0 });
+        setValue("quantity", 2);
+        setValue("price", 3900);
+        setValue("netprice", 1300);
+        setValue("shipcost", 0);
+        setValue("shortname", `زيت الرموش (2)`);
     };
 
     const badgeStyle: CSSProperties = {
@@ -41,28 +64,36 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
         fontWeight: "bold",
     };
 
-    const wilayaData = useMemo(()=>{
-        const data = wilayaList.map((wilaya)=> ({label:wilaya.name,value:`${wilaya.name}|${wilaya.shipcost}`}))
-        return data
-    },[])
+    const wilayaData = useMemo(() => {
+        const data = wilayaList.map((wilaya) => ({ label: wilaya.name, value: `${wilaya.name}|${wilaya.shipcost}` }));
+        return data;
+    }, []);
 
+    const handleWilayaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setValue("realship", +e.target.value.split("|")[1]);
+        setValue("wilaya", `${e.target.value.split("|")[0]}`);
+    };
+
+    const onSubmit = (data: TOrderREQ) => {
+        const newData = {
+            ...data,
+            total: watch("price") + watch("shipcost"),
+            date: moment().format("L LTS"),
+            timecode: "🕑",
+        };
+        CreateNewOrder(newData);
+    };
     return (
-        <form dir="rtl" className="order-form" id="order-form" ref={targetRef}>
+        <form dir="rtl" className="order-form" id="order-form" ref={targetRef} onSubmit={handleSubmit(onSubmit)}>
             <Fieldset legend="معلومات الزبون" variant="filled" mx={10} style={{ border: `3px solid ${color}` }}>
                 <Stack>
                     <Flex justify="space-evenly">
-                        <TextInput size="lg" w={"48%"} placeholder="الإسم" />
-                        <TextInput size="lg" w={"48%"} placeholder="رقم الهاتف " />
+                        <TextInput error={errors?.name?.message} size="lg" w={"48%"} {...register("name")} placeholder="الإسم" />
+                        <TextInput  error={errors?.phone?.message} size="lg" w={"48%"} {...register("phone")} placeholder="رقم الهاتف " />
                     </Flex>
                     <Flex justify="space-evenly">
-                        <TextInput size="lg" w={"48%"} placeholder="البلدية و الحي" />
-                        <NativeSelect
-                            size="lg"
-                            w={"48%"}
-                            data={wilayaData}
-                            onChange={(e) => setOrderData({ ...orderData, realship: +e.target.value.split("|")[1] })}
-                        />
-                           
+                        <TextInput error={errors?.adress?.message} size="lg" w={"48%"} {...register("adress")} placeholder="العنوان" />
+                        <NativeSelect error={errors?.wilaya?.message} size="lg" w={"48%"} data={wilayaData} onChange={handleWilayaChange} />
                     </Flex>
                     <Divider
                         label={
@@ -101,7 +132,7 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
                         <Title order={3}>
                             السعر:{" "}
                             <Badge size="lg" bg={color} style={badgeStyle}>
-                                {`${prices.price} دج`}
+                                {`${watch("price")} دج`}
                             </Badge>
                         </Title>
                         <Title order={3} display={"block"}>
@@ -114,12 +145,12 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
                         <Title order={3}>
                             الإجمالي:{" "}
                             <Badge size="lg" bg={"yellow"} style={badgeStyle}>
-                                {prices.price + prices.shipping} دج
+                                {watch("price") + watch("shipcost")} دج
                             </Badge>
                         </Title>
                     </Blockquote>
                 </Stack>
-                <Button bg={color} my={15} fullWidth size="lg" className="animation">
+                <Button type="submit" loading={isLoading} bg={color} my={15} fullWidth size="lg" className="animation">
                     تأكيد وإرسال الطلب
                 </Button>
             </Fieldset>

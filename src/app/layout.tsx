@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { ColorSchemeScript } from "@mantine/core";
 import DevicesContextProvider from "../contexts/DevicesContext";
+import ReduxProvider from "@/redux/Provider";
 
 const theme = createTheme({
     /** Put your mantine theme override here */
@@ -23,7 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </head>
             <body>
                 <MantineProvider theme={theme}>
-                    <DevicesContextProvider>{children}</DevicesContextProvider>
+                    <ReduxProvider>
+                        <DevicesContextProvider>{children}</DevicesContextProvider>
+                    </ReduxProvider>
                 </MantineProvider>
             </body>
         </html>

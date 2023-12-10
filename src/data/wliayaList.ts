@@ -1,4 +1,6 @@
-export const wilayaList = [
+import { TWilaya } from "@/@types/Wilaya.type";
+
+export const wilayaList:TWilaya[] = [
     { number: 0, name: 'إختر الولاية', shipcost: 0 },
     { number: 1, name: '1-أدرار', shipcost: 1200 },
     { number: 2, name: '2-الشلف', shipcost: 800 },
