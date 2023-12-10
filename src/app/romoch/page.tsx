@@ -40,7 +40,7 @@ export default function Romoch() {
         };
     }, 1000);
     useEffect(()=>{
-        const PIXEL_ID = '11111111111111'
+        const PIXEL_ID = '356136510430490'
         ReactPixel.init(PIXEL_ID);
         ReactPixel.pageView()
      },[])
@@ -76,7 +76,7 @@ export default function Romoch() {
                 <OrderNowFrom color="#f16a8e" targetRef={targetRef} />
                 <AppShell footer={{ height: 60 }} hidden={hideBtn}>
                     <AppShell.Footer>
-                        <OrderNowBtn btnText="أطلبffي الآن" color="#f16a8e" handleClick={scrollIntoView}  />
+                        <OrderNowBtn btnText="أطلبي الآن" color="#f16a8e" handleClick={scrollIntoView}  />
                     </AppShell.Footer>
                 </AppShell>
             </Stack>
