@@ -16,6 +16,7 @@ export default function Page() {
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '665240662159794');
         fbq('track', 'PageView');
+        fbq('track', 'Purchase');
         `;
     },[])
 
