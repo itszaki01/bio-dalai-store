@@ -39,7 +39,7 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
             wilaya: "الولاية",
             shortname: "زيت الرموش (2)",
         },
-        resolver: yupResolver(formSchema)
+        // resolver: yupResolver(formSchema)
     });
 
     const handleOfferOneClick = () => {
