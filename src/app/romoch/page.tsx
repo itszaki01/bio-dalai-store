@@ -11,7 +11,7 @@ import ImgFive from "../../assets/images/romoch/5.png";
 import OrderNowFrom from "@/components/OrderNowFrom/OrderNowFrom";
 import OrderNowBtn from "@/components/OrderNowBtn";
 import { useDevicesContext } from "@/contexts/DevicesContext";
-import ReactPixel from 'react-facebook-pixel';
+import ReactPixel from "react-facebook-pixel";
 import Head from "next/head";
 
 export default function Romoch() {
@@ -39,29 +39,26 @@ export default function Romoch() {
             }
         };
     }, 1000);
+    useEffect(()=>{
+        const doc = document.getElementById("pixel-fb")
+        if(!doc) return
+        doc.innerHTML = `
+        <!-- Meta Pixel Code -->
+    
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '665240662159794');
+    fbq('track', 'PageView');
+        `;
+    },[])
     return (
         <Container size={isTabletAndMobile ? "xl" : "md"} p={0} pb={60}>
-             <Head>
-            <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${356136510430490}');
-              fbq('track', 'PageView');
-              fbq('track', 'Purchase');
-            `,
-          }}
-        />
-        
-            </Head> 
-            
             <Stack>
                 <Image src={ImgOne} style={{ width: "100%", height: "100%" }} alt="image1" />
                 <Image src={ImgTwo} style={{ width: "100%", height: "100%" }} alt="image1" />
@@ -72,7 +69,7 @@ export default function Romoch() {
                 <OrderNowFrom color="#f16a8e" targetRef={targetRef} />
                 <AppShell footer={{ height: 60 }} hidden={hideBtn}>
                     <AppShell.Footer>
-                        <OrderNowBtn btnText="أطلبي الآن" color="#f16a8e" handleClick={scrollIntoView}  />
+                        <OrderNowBtn btnText="أطلبي الآن" color="#f16a8e" handleClick={scrollIntoView} />
                     </AppShell.Footer>
                 </AppShell>
             </Stack>
