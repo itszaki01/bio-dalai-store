@@ -78,7 +78,7 @@ export default function Romoch() {
                 <OrderNowFrom color="#f16a8e" targetRef={targetRef} />
                 <AppShell footer={{ height: 60 }} hidden={hideBtn}>
                     <AppShell.Footer>
-                        <OrderNowBtn btnText="أطلبي الآن" color="#f16a8e" handleClick={scrollIntoView}  />
+                        <OrderNowBtn btnText="أطلبffي الآن" color="#f16a8e" handleClick={scrollIntoView}  />
                     </AppShell.Footer>
                 </AppShell>
             </Stack>
