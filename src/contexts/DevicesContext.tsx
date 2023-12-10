@@ -21,5 +21,4 @@ export default function DevicesContextProvider({ children }: { children: ReactNo
     return <DevicesContext.Provider value={{ isXsMobile, isMobile, isTablet, isDesktop,isTabletAndMobile }}>{children}</DevicesContext.Provider>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useDevicesContext = () => useContext(DevicesContext);
