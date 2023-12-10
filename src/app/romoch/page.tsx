@@ -11,8 +11,6 @@ import ImgFive from "../../assets/images/romoch/5.png";
 import OrderNowFrom from "@/components/OrderNowFrom/OrderNowFrom";
 import OrderNowBtn from "@/components/OrderNowBtn";
 import { useDevicesContext } from "@/contexts/DevicesContext";
-import { pageView } from "react-facebook-pixel";
-import { initFacebookPixel } from "@/utils/facebookPixel";
 import ReactPixel from 'react-facebook-pixel';
 import Head from "next/head";
 
@@ -41,11 +39,11 @@ export default function Romoch() {
             }
         };
     }, 1000);
-    // useEffect(()=>{
-    //     const PIXEL_ID = '11111111111111'
-    //     ReactPixel.init(PIXEL_ID);
-    //     ReactPixel.pageView()
-    //  },[])
+    useEffect(()=>{
+        const PIXEL_ID = '11111111111111'
+        ReactPixel.init(PIXEL_ID);
+        ReactPixel.pageView()
+     },[])
     return (
         <Container size={isTabletAndMobile ? "xl" : "md"} p={0} pb={60}>
             <Head>

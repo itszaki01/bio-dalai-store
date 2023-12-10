@@ -1,4 +1,3 @@
-'use client'
 import ReactPixel from 'react-facebook-pixel';
 
 const PIXEL_ID = '356136510430490'; // Replace with your actual Pixel ID
