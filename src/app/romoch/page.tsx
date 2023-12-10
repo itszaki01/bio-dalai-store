@@ -46,7 +46,7 @@ export default function Romoch() {
      },[])
     return (
         <Container size={isTabletAndMobile ? "xl" : "md"} p={0} pb={60}>
-            <Head>
+            {/* <Head>
             <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -65,7 +65,8 @@ export default function Romoch() {
           }}
         />
         {/* End Facebook Pixel script */}
-            </Head>
+            {/* </Head>  */}
+            
             <Stack>
                 <Image src={ImgOne} style={{ width: "100%", height: "100%" }} alt="image1" />
                 <Image src={ImgTwo} style={{ width: "100%", height: "100%" }} alt="image1" />
