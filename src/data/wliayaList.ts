@@ -58,6 +58,6 @@ export const wilayaList:TWilaya[] = [
     { number: 54, name: '54-عين قزام', shipcost: 1500 },
     { number: 55, name: '55-تقرت', shipcost: 950 },
     { number: 56, name: '56-جانت', shipcost: 1000 },
-    { number: 57, name: '57-الغير', shipcost: 950 },
+    { number: 57, name: '57-المغير', shipcost: 950 },
     { number: 58, name: '58-المنيعة', shipcost: 950 },
   ];

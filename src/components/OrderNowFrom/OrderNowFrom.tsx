@@ -21,7 +21,7 @@ type Props = {
 const formSchema = yup.object().shape({
     name: yup.string().required('الرجاء كتابة الإسم').min(3,'يجب أن يكون الإسم من 3 حروف على الأقل'),
     adress: yup.string().required('الرجاء كتابة العنوان').min(3,'يجب أن يكون العنوان من 3 حروف على الأقل'),
-    phone: yup.string().required('الرجاء كتابة رقم الهاتف').min(10,'رقم الهاتف خاطئ').max(10,'رقم الهاتف خاطئ'),
+    phone: yup.string().required('الرجاء كتابة رقم الهاتف').min(10,'رقم الهاتف غير مكتمل أو خاطئ').max(10,'رقم الهاتف خاطئ'),
     wilaya: yup.string().matches(/^(?!.*الولاية).*/,'الرجاء إختيار الولاية'),
     shipcost: yup.number().required(),
     price: yup.number().required(),
@@ -38,7 +38,6 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
             realship: 0,
             quantity: 2,
             netprice: 1300,
-            wilaya: "الولاية",
             shortname: "زيت الرموش (2)",
         },
         //@ts-ignore
@@ -73,16 +72,15 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
         return data;
     }, []);
 
-    const handleWilayaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setValue("realship", +e.target.value.split("|")[1]);
-        setValue("wilaya", `${e.target.value.split("|")[0]}`);
-    };
+  
 
     const onSubmit = async (data: TOrderREQ) => {
         const newData = {
             ...data,
             total: watch("price") + watch("shipcost"),
             date: moment().format("L LTS"),
+            wilaya: data.wilaya.split("|")[0],
+            realship: +data.wilaya.split("|")[1],
             timecode: "🕑",
         };
 
@@ -103,7 +101,7 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
                     </Flex>
                     <Flex justify="space-evenly">
                         <TextInput error={errors?.adress?.message} size="lg" w={"48%"} {...register("adress")} placeholder="العنوان" />
-                        <NativeSelect error={errors?.wilaya?.message} size="lg" w={"48%"} data={wilayaData} onChange={handleWilayaChange} />
+                        <NativeSelect  error={errors?.wilaya?.message} size="lg" w={"48%"} data={wilayaData} {...register('wilaya')} />
                     </Flex>
                     <Divider
                         label={
