@@ -7,11 +7,9 @@ import { useDevicesContext } from "@/contexts/DevicesContext";
 import { PixelPerchaseScript } from "@/utils/facebookPixel";
 export default function Page() {
     const { isTabletAndMobile } = useDevicesContext();
-    useEffect(() => {
-        const doc = document.getElementById("pixel-fb");
-        if (!doc) return;
-        doc.innerHTML = PixelPerchaseScript;
-    }, []);
+    
+        const doc = document.getElementById("pixel-fb2");
+        if (doc)  doc.innerHTML = PixelPerchaseScript;;
 
     return (
         <Container size={isTabletAndMobile ? "xl" : "md"} p={0} pb={60}>

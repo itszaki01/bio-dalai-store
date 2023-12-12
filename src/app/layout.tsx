@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 <ColorSchemeScript />
                 <script id='pixel-fb'></script>
+                <script id='pixel-fb2'></script>
                 <link rel="icon" type="image/svg+xml" href={'./logo.png'} />
             </head>
             <body>
