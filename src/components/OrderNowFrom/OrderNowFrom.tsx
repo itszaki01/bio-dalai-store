@@ -84,7 +84,7 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
 
         try {
             await CreateNewOrder(newData).unwrap();
-            router.push('/thankyou')
+            window.location.href = '/thankyou'
         }catch (error) {
             console.log(error)
         }
