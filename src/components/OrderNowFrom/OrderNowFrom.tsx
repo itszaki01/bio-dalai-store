@@ -72,8 +72,6 @@ export default function OrderNowFrom({ color, targetRef }: Props) {
         return data;
     }, []);
 
-  
-
     const onSubmit = async (data: TOrderREQ) => {
         const newData = {
             ...data,

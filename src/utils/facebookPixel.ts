@@ -1,4 +1,4 @@
-const PIXEL_ID = '356136510430490'; // Replace with your actual Pixel ID
+const PIXEL_ID = '665240662159794'; // Replace with your actual Pixel ID
 
 export const PixelPageViewScript = `
 !function(f,b,e,v,n,t,s)
